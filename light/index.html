@@ -1,0 +1,71 @@
+<head>
+  <meta charset="utf-8">
+  <title>sample</title>
+  <style>
+    button {
+      border-radius: 10px;
+      font-size: 2em;
+      padding: 30px 30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="div1"></div>
+  <script language="javascript" type="text/javascript">
+const line = 5
+const column = 5
+let userData = [];
+let btnlist=[];
+let change = (i,j)=>{
+  if(0<=i&&i<column&&0<=j&&j<line){
+    if(userData[i][j]){
+      userData[i][j]=false;
+    }else{
+      userData[i][j]=true;
+    }
+    btnlist[i][j].innerHTML = view(userData[i][j]);
+  }
+}
+let view=(boo)=>{
+  if(boo){
+    return "■"
+  }else{
+    return "□"
+  }
+}
+  for(let i=0; i<column; i++){
+    const newDiv = document.createElement("div");
+    btnlist[i]=[];
+    userData[i]=[];
+    for(let j=0; j<line; j++){
+        btnlist[i][j]=document.createElement("button");
+        userData[i][j]=true;
+        btnlist[i][j].innerHTML = view(userData[i][j]);
+        btnlist[i][j].i=i;
+        btnlist[i][j].j=j;
+        btnlist[i][j].addEventListener("click",(e)=>{
+          console.log(e.target.i,e.target.j);
+          //5
+          change(e.target.i,e.target.j);
+          //8
+          change(e.target.i-1,e.target.j);
+          //2
+          change(e.target.i+1,e.target.j);
+          //6
+          change(e.target.i,e.target.j+1);
+          //4
+          change(e.target.i,e.target.j-1);
+          //かど
+          //change(e.target.i-1,e.target.j-1);
+          //change(e.target.i+1,e.target.j+1);
+          //change(e.target.i-1,e.target.j+1);
+          //change(e.target.i+1,e.target.j-1);
+        })
+        newDiv.appendChild(btnlist[i][j]);
+    }
+    div1.appendChild(newDiv);
+  }
+  </script>
+</body>
+
+</html>

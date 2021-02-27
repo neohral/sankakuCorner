@@ -1,0 +1,97 @@
+document.body.innerHTML +="Resistance:Avalon Manager v1.1"
+var i=0;
+var serif=[];
+var timer=[];
+var playing=false;
+
+var gm = new SpeechSynthesisUtterance('load end');
+speechSynthesis.speak(gm);
+speechSynthesis.cancel(gm);
+
+document.querySelector('#speechButton').onclick = function () {
+serif=[];
+timer=[];
+if(playing){
+	return;
+}
+playing=true;
+serif.push('レジスタンスアヴァロン');
+timer.push(3000);
+serif.push('みなさん、目を閉じて、こぶしを前に出してください');
+timer.push(2000);
+if(document.querySelector('#oberon').checked)
+{
+	serif.push('オベロンを除く、モードレットの手下は、目をひらいて、周囲を確認して誰が邪悪なしもべであるか確認してください');
+	timer.push(5000);
+}else{
+	serif.push('モードレットの手下は、目をひらいて、誰が邪悪なしもべであるかを確認してください');
+	timer.push(5000);
+}
+serif.push('モードレッドの手下は目を閉じてください');
+timer.push(3000);
+if(document.querySelector('#merlin').checked)
+{
+	if(document.querySelector('#modred').checked)
+	{
+		serif.push('モードレッド本人を除く、、モードレッドの手下は親指をたてて、マーリンが知れるようにしてください');
+		timer.push(2000);
+	}else{
+		serif.push('モードレッドの手下は親指をたてて、マーリンが知れるようにしてください');
+		timer.push(2000);
+	}
+	serif.push('マーリンは目をひらいて、邪悪のしもべを見てください');
+	timer.push(5000);
+	serif.push('モードレッドの手下は親指を戻して、再び手を握りこぶしにしてください');
+	timer.push(2000);
+	serif.push('マーリンは目を閉じてください');
+	timer.push(3000);
+}
+serif.push('すべてのプレイヤーは目をとじて、自分の手を握りこぶしにしてください');
+timer.push(2000);
+if(document.querySelector('#percival').checked)
+{
+	serif.push('マーリンとモルガナは親指をたてて、パーシヴァルが知れるようにしてください');
+	timer.push(2000);
+	serif.push('パーシヴァルは目をあけて、マーリンとモルガナを確認してください');
+	timer.push(5000);
+	serif.push('マーリンとモルガナは親指を戻して、再び手を握りこぶしにしてください');
+	timer.push(2000);
+	serif.push('パーシヴァルは目を閉じてください');
+	timer.push(3000);
+	serif.push('すべてのプレイヤーは目をとじて、自分の手を握りこぶしにしてください');
+	timer.push(2000);
+}
+serif.push('みなさん、目を開けてください');
+timer.push(2000);
+
+	i=0;
+	gm = new SpeechSynthesisUtterance('');
+	var voices = speechSynthesis.getVoices();
+	voices.forEach(function(v, i){
+		if(v.name == 'Google 日本語') gm.voice = v;
+			//document.write(v.name);
+	});
+	gm.volume = 1;
+	gm.rate = 1;
+	gm.pitch = 1;
+	gm.lang='ja-JP';
+	gm.onend = function (event) {
+        setTimeout(soundPlay,timer[i]);
+		  i++
+    }
+	gm.text=serif[i];
+	speechSynthesis.speak(gm);
+	
+};
+function soundPlay()
+{
+	if(i<serif.length)
+	{
+		gm.text=serif[i];
+		speechSynthesis.speak(gm);
+	}else{
+		playing=false;
+		gm.onend=null;
+		return;
+	}
+}
